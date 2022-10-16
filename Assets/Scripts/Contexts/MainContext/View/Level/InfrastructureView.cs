@@ -1,18 +1,17 @@
 using System.Collections.Generic;
-using strange.extensions.mediation.impl;
 using UnityEngine;
 
 namespace Contexts.MainContext
 {
-    public class InfrastructureView : View
+    public class InfrastructureView : IdentifiableView
     {
+        [HideInInspector, SerializeField] private string type;
         [SerializeField] private Collider mainCollider;
         [SerializeField] private List<Rigidbody> cells;
 
         public InfrastructureData InfrastructureData { get; private set; }
+        public string Type => type;
         
-        public ushort ID { get; private set; }
-
         protected override void Awake()
         {
             base.Awake();
@@ -25,11 +24,6 @@ namespace Contexts.MainContext
             InfrastructureData = infrastructureData;
         }
         
-        public void SetID(ushort id)
-        {
-            ID = id;
-        }
-
         public void SetDivideActive(bool enabled)
         {
             mainCollider.enabled = !enabled;

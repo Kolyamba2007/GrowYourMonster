@@ -16,3 +16,5 @@ MonoBehaviour:
     attackDamage: 50
     attackRange: 5
     movementSpeed: 10
+    growthPointLimit: 1000
+    maxScale: 6

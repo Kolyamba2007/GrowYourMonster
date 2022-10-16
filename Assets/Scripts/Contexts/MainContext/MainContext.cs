@@ -80,11 +80,17 @@ namespace Contexts.MainContext
             injectionBinder
                 .Bind<EndGameSignal>()
                 .ToSingleton();
+            
+            injectionBinder
+                .Bind<HandleTakingDamageSignal>()
+                .ToSingleton();
         }
     
         private void BindCommands()
         {
-            
+            commandBinder
+                .Bind<HandleTakingDamageSignal>()
+                .To<HandleTakingDamageCommand>();
         }
 
         private void BindModels()
@@ -93,6 +99,11 @@ namespace Contexts.MainContext
                 .Bind<IHealthState>()
                 .To<HealthState>()
                 .ToSingleton();
+            
+            injectionBinder
+                .Bind<IMonsterState>()
+                .To<MonsterState>()
+                .ToSingleton();
         }
 
         private void BindServices()
@@ -100,6 +111,11 @@ namespace Contexts.MainContext
             injectionBinder
                 .Bind<IHealthService>()
                 .To<HealthService>()
+                .ToSingleton();
+            
+            injectionBinder
+                .Bind<IMonsterService>()
+                .To<MonsterService>()
                 .ToSingleton();
         }
     }

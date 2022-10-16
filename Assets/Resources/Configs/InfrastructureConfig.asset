@@ -13,5 +13,44 @@ MonoBehaviour:
   m_Name: InfrastructureConfig
   m_EditorClassIdentifier: 
   infrastructureData:
-    maxHealth: 200
-    points: 1000
+    reorderableList:
+      canAdd: 1
+      canRemove: 1
+      draggable: 1
+      expandable: 1
+      multipleSelection: 1
+      isExpanded: 1
+      label:
+        m_Text: Keys
+        m_Image: {fileID: 0}
+        m_Tooltip: 
+      headerHeight: 18
+      footerHeight: 13
+      slideEasing: 0.15
+      verticalSpacing: 2
+      showDefaultBackground: 1
+      elementDisplayType: 0
+      elementNameProperty: 
+      elementNameOverride: 
+      elementIcon: {fileID: 0}
+    reqReferences: {fileID: 0}
+    isExpanded: 1
+    _keyValues:
+    - Big House
+    - Small House
+    - Tree
+    - Hot Dog
+    _keys:
+    - Big House
+    - Small House
+    - Tree
+    - Hot Dog
+    _values:
+    - maxHealth: 1000
+      points: 100
+    - maxHealth: 700
+      points: 70
+    - maxHealth: 50
+      points: 5
+    - maxHealth: 50
+      points: 5

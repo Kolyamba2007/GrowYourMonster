@@ -1,15 +1,17 @@
 using UnityEngine;
+using System.Collections.Generic;
+using RotaryHeart.Lib.SerializableDictionary;
 
 namespace Contexts.MainContext
 {
     [CreateAssetMenu(fileName = "InfrastructureConfig", menuName = "Configurations/InfrastructureConfig", order = 2)]
     public class InfrastructureConfig : ScriptableObject
     {
-        [SerializeField] private InfrastructureData infrastructureData;
+        [SerializeField] private SerializableDictionaryBase<string, InfrastructureData> infrastructureData;
 
         /// <summary>
-        /// Return infrastructureData data
+        /// Return infrastructure data
         /// </summary>
-        public InfrastructureData InfrastructureData => infrastructureData;
+        public IDictionary<string, InfrastructureData> InfrastructureData => infrastructureData;
     }
 }

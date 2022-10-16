@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using strange.extensions.mediation.impl;
 using UnityEngine;
@@ -22,7 +23,9 @@ namespace Contexts.MainContext
         {
             while (true)
             {
-                transform.position = targetTransform.position + _startPos;
+                transform.position = targetTransform.position + new Vector3(_startPos.x,
+                    _startPos.y + (targetTransform.localScale.y - 1) * 10,
+                    _startPos.z + (targetTransform.localScale.z - 1) * 10);
             
                 yield return null;
             }

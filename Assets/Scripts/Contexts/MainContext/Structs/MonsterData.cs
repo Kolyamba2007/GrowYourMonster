@@ -9,9 +9,13 @@ namespace Contexts.MainContext
         [SerializeField] private int attackDamage;
         [SerializeField] private float attackRange;
         [SerializeField] private float movementSpeed;
+        [SerializeField] private int growthPointLimit;
+        [SerializeField] private float maxScale;
 
         public int AttackDamage => attackDamage;
         public float AttackRange => attackRange;
         public float MovementSpeed => movementSpeed;
+        public int GrowthPointLimit => growthPointLimit;
+        public float MaxScale => maxScale;
     }
 }

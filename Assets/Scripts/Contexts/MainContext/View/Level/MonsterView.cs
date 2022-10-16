@@ -1,11 +1,12 @@
 using System.Collections;
-using strange.extensions.mediation.impl;
+using System.Collections.Generic;
 using strange.extensions.signal.impl;
+using TMPro;
 using UnityEngine;
 
 namespace Contexts.MainContext
 {
-    public class MonsterView : View
+    public class MonsterView : IdentifiableView
     {
         public Signal<Collider> HitInfrastructureSignal { get; } = new Signal<Collider>();
         
@@ -14,12 +15,13 @@ namespace Contexts.MainContext
         [SerializeField] private string walkAnimBool;
         [SerializeField] private string attackAnimBool;
         [Space, SerializeField] private LayerMask infrastructureLayer;
+        [SerializeField] private SkinnedMeshRenderer meshRenderer;
+        [Space, SerializeField] private TMP_Text scoreText;
 
         public MonsterData MonsterData { get; private set; }
 
         private Controls _controls;
-        private readonly RaycastHit[] _resultHit = new RaycastHit[1];
-        private int _hit;
+        private readonly List<Collider> _temp = new List<Collider>();
 
         public void SetData(MonsterData monsterData, Controls controls)
         {
@@ -27,21 +29,32 @@ namespace Contexts.MainContext
             _controls = controls;
         }
 
+        public void UpdateScore(int score)
+        {
+            scoreText.text = score.ToString();
+        }
+        
+        public void GrowUp(float scale, float blendKeyValue)
+        {
+            StartCoroutine(Growth(scale, blendKeyValue));
+        }
+        
+        public void RemoveFromTemp(Collider collider)
+        {
+            _temp.Remove(collider);
+
+            if (_temp.Count == 0)
+            {
+                if (animator.GetBool(attackAnimBool))
+                    animator.SetBool(attackAnimBool, false);
+            }
+        }
+        
         public void StartMove()
         {
             StartCoroutine(Move());
         }
         
-        public void StartInfrastructureDetect()
-        {
-            StartCoroutine(InfrastructureDetect());
-        }
-        
-        public void StartAttack()
-        {
-            StartCoroutine(Attack());
-        }
-
         private IEnumerator Move()
         {
             while (true)
@@ -53,47 +66,55 @@ namespace Contexts.MainContext
                 else
                     animator.SetBool(walkAnimBool, false);
 
-                rb.velocity = new Vector3(movementVector.x, 0, movementVector.y) * MonsterData.MovementSpeed;
+                rb.velocity = new Vector3(movementVector.x, 0, movementVector.y) * (MonsterData.MovementSpeed +
+                              transform.localScale.z);
                 transform.LookAt(transform.position + new Vector3(movementVector.x, 0, movementVector.y));
 
                 yield return null;
             }
         }
         
-        private IEnumerator InfrastructureDetect()
+        private void OnTriggerEnter(Collider collider)
         {
-            while (true)
+            if ((infrastructureLayer.value & (1 << collider.gameObject.layer)) > 0)
             {
-                _hit = Physics.RaycastNonAlloc(transform.position + Vector3.up, transform.forward, _resultHit,
-                    MonsterData.AttackRange, infrastructureLayer.value);
+                if (!animator.GetBool(attackAnimBool))
+                    animator.SetBool(attackAnimBool, true);
+                
+                _temp.Add(collider);
+            }
+        }
 
-                yield return new WaitForFixedUpdate();
+        private void OnTriggerExit(Collider collider)
+        {
+            if ((infrastructureLayer.value & (1 << collider.gameObject.layer)) > 0)
+                RemoveFromTemp(collider);
+        }
+
+        private IEnumerator Growth(float scale, float blendKeyValue)
+        {
+            Vector3 startScale = transform.localScale;
+            Vector3 endScale = new Vector3(scale, scale, scale);
+            
+            float startKeyValue = meshRenderer.GetBlendShapeWeight(0);
+            
+            float time = 0;
+
+            while (time < 1)
+            {
+                time += Time.deltaTime;
+
+                transform.localScale = Vector3.Lerp(startScale, endScale, time);
+                meshRenderer.SetBlendShapeWeight(0, Mathf.Lerp(startKeyValue, blendKeyValue, time));
+                
+                yield return null;
             }
         }
         
-        private IEnumerator Attack()
-        {
-            while (true)
-            {
-                if (_hit != 0)
-                {
-                    if (!animator.GetBool(attackAnimBool))
-                        animator.SetBool(attackAnimBool, true);
-                }
-                else
-                {
-                    if (animator.GetBool(attackAnimBool))
-                        animator.SetBool(attackAnimBool, false);
-                }
-
-                yield return new WaitForFixedUpdate();
-            }
-        }
-
         private void OnAttack()
         {
-            if (_hit != 0)
-                HitInfrastructureSignal.Dispatch(_resultHit[0].collider);
+            for (int i = 0; i < _temp.Count; i++)
+                HitInfrastructureSignal.Dispatch(_temp[i]);
         }
     }
 }
