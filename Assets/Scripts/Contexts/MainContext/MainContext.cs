@@ -55,8 +55,12 @@ namespace Contexts.MainContext
                 .To<JoystickMediator>();
             
             mediationBinder
-                .Bind<MonsterView>()
-                .To<MonsterMediator>();
+                .Bind<ControlledMonsterView>()
+                .To<ControlledMonsterMediator>();
+            
+            mediationBinder
+                .Bind<MonsterBotView>()
+                .To<MonsterBotMediator>();
             
             mediationBinder
                 .Bind<InfrastructureView>()

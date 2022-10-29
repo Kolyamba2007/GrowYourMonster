@@ -1272,7 +1272,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56914f6fd79c031458e89f4bb7e6f651, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  camera: {fileID: 8591105142901365979}
 --- !u!1 &8591105144337485873
 GameObject:
   m_ObjectHideFlags: 0
@@ -1422,7 +1421,7 @@ GameObject:
   - component: {fileID: 8591105144079045366}
   - component: {fileID: 8591105144079045367}
   - component: {fileID: 8591105144079045365}
-  - component: {fileID: 8591105144079045368}
+  - component: {fileID: 1316569329339766927}
   m_Layer: 6
   m_Name: Monster3
   m_TagString: Untagged
@@ -1513,7 +1512,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 4, y: 5.4, z: 3}
   m_Center: {x: 0, y: 2.8, z: 1.5}
---- !u!114 &8591105144079045368
+--- !u!114 &1316569329339766927
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1522,19 +1521,22 @@ MonoBehaviour:
   m_GameObject: {fileID: 8933124389739818922}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3b3960d62dbad2e4dbc323c38f170593, type: 3}
+  m_Script: {fileID: 11500000, guid: cba06bd8592ba074fad58172e75ec947, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rb: {fileID: 8591105144079045366}
   animator: {fileID: 2761596306787692394}
   walkAnimBool: isWalk
   attackAnimBool: isAttack
   infrastructureLayer:
     serializedVersion: 2
     m_Bits: 128
+  monsterLayer:
+    serializedVersion: 2
+    m_Bits: 64
   meshRenderer: {fileID: 2159085867419890720}
-  scoreText: {fileID: 8591105144337485839}
+  scoreText: {fileID: 8591105142396364417}
   progressBar: {fileID: 8591105144328462632}
+  rb: {fileID: 8591105144079045366}
 --- !u!1 &9168167687807565433
 GameObject:
   m_ObjectHideFlags: 0

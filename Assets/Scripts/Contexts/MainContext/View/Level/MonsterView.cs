@@ -6,31 +6,26 @@ using UnityEngine;
 
 namespace Contexts.MainContext
 {
-    public class MonsterView : IdentifiableView
+    public abstract class MonsterView : IdentifiableView
     {
         public Signal<Collider> HitInfrastructureSignal { get; } = new Signal<Collider>();
+        public Signal<Collider> HitEnemySignal { get; } = new Signal<Collider>();
         
-        [SerializeField] private Rigidbody rb;
-        [Space, SerializeField] private Animator animator;
-        [SerializeField] private string walkAnimBool;
-        [SerializeField] private string attackAnimBool;
+        [Space, SerializeField] protected Animator animator;
+        [SerializeField] protected string walkAnimBool;
+        [SerializeField] protected string attackAnimBool;
         [Space, SerializeField] private LayerMask infrastructureLayer;
+        [SerializeField] private LayerMask monsterLayer;
         [SerializeField] private SkinnedMeshRenderer meshRenderer;
         [Space, SerializeField] private TMP_Text scoreText;
         [Space, SerializeField] private GameObject progressBar;
 
-        public MonsterData MonsterData { get; private set; }
+        public MonsterData MonsterData { get; protected set; }
+        
+        protected Coroutine AttackCoroutine;
+        protected Coroutine MoveCoroutine;
 
-        private Controls _controls;
-        private readonly List<Collider> _temp = new List<Collider>();
-
-        private Coroutine _attackCoroutine;
-
-        public void SetData(MonsterData monsterData, Controls controls)
-        {
-            MonsterData = monsterData;
-            _controls = controls;
-        }
+        protected readonly List<Collider> Temp = new List<Collider>();
 
         public void UpdateScore(int score)
         {
@@ -41,26 +36,12 @@ namespace Contexts.MainContext
         {
             StartCoroutine(Growth(scale, blendKeyValue));
         }
-        
-        public void FinishAttack(Collider collider)
-        {
-            _temp.Remove(collider);
 
-            if (_temp.Count == 0)
-            {
-                if (_attackCoroutine != null)
-                {
-                    StopCoroutine(_attackCoroutine);
-                    _attackCoroutine = null;
-                }
-                if (animator.GetBool(attackAnimBool))
-                    animator.SetBool(attackAnimBool, false);
-            }
-        }
+        public abstract void FinishAttack(Collider collider);
         
         public void StartMove()
         {
-            StartCoroutine(Move());
+            MoveCoroutine = StartCoroutine(Move());
         }
 
         public void DestroyView()
@@ -80,35 +61,24 @@ namespace Contexts.MainContext
             progressBar.SetActive(false);
         }
 
-        private IEnumerator Move()
-        {
-            while (true)
-            {
-                Vector3 movementVector = Vector3.Normalize(-_controls.Character.Movement.ReadValue<Vector2>());
-
-                if (movementVector != Vector3.zero)
-                    animator.SetBool(walkAnimBool, true);
-                else
-                    animator.SetBool(walkAnimBool, false);
-
-                rb.velocity = new Vector3(movementVector.x, 0, movementVector.y) * (MonsterData.MovementSpeed +
-                              transform.localScale.z);
-                transform.LookAt(transform.position + new Vector3(movementVector.x, 0, movementVector.y));
-
-                yield return null;
-            }
-        }
+        protected abstract IEnumerator Move();
+        protected abstract IEnumerator Attack();
         
         private void OnTriggerEnter(Collider collider)
         {
             if ((infrastructureLayer.value & (1 << collider.gameObject.layer)) > 0)
             {
-                if (_attackCoroutine is null)
-                    _attackCoroutine = StartCoroutine(Attack());
+                if (AttackCoroutine is null)
+                    AttackCoroutine = StartCoroutine(Attack());
                 if (!animator.GetBool(attackAnimBool))
                     animator.SetBool(attackAnimBool, true);
-
-                _temp.Add(collider);
+                
+                Temp.Add(collider);
+            }
+            else if ((monsterLayer.value & (1 << collider.gameObject.layer)) > 0)
+            {
+                HitEnemySignal.Dispatch(collider);
+                animator.Play("Attack");
             }
         }
 
@@ -135,17 +105,6 @@ namespace Contexts.MainContext
                 meshRenderer.SetBlendShapeWeight(0, Mathf.Lerp(startKeyValue, blendKeyValue, time));
                 
                 yield return null;
-            }
-        }
-        
-        private IEnumerator Attack()
-        {
-            while (true)
-            {
-                for (int i = 0; i < _temp.Count; i++)
-                    HitInfrastructureSignal.Dispatch(_temp[i]);
-
-                yield return new WaitForSeconds(MonsterData.AttackSpeed);
             }
         }
     }
