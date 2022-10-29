@@ -239,10 +239,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6448171609349059784}
-  - component: {fileID: 6842718906314855201}
-  - component: {fileID: 6842718906314855206}
-  m_Layer: 7
-  m_Name: Tree-1_destructive
+  m_Layer: 8
+  m_Name: DevideTree
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -265,33 +263,3 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &6842718906314855201
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5924293198748986994}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1.2, y: 3.8, z: 1.2}
-  m_Center: {x: 0, y: 1.9, z: 0}
---- !u!114 &6842718906314855206
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5924293198748986994}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b96e08b33779e9e44b4ee3eb95b02af5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  type: Tree
-  mainCollider: {fileID: 6842718906314855201}
-  cells:
-  - {fileID: 6842718906314855259}
-  - {fileID: 6842718906314855205}

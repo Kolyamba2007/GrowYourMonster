@@ -16,13 +16,17 @@ namespace Contexts.MainContext
                 MonsterService.GetScore(MonsterView.ID) + MonsterView.MonsterData.AttackDamage, out int remainingHealth);
 
             if (remainingHealth != 0)
-                Debug.Log("Hit");//unitView.UpdateHealthBar(remainingHealth);
+            {
+                InfrastructureView.Shake();
+                InfrastructureView.EnableHealthBar();
+                InfrastructureView.UpdateHealthBar(remainingHealth);
+            }
             else
             {
                 HealthService.Remove(InfrastructureView.ID);
                 
                 MonsterView.FinishAttack(InfrastructureView.GetComponent<Collider>());
-                InfrastructureView.SetDivideActive(true);
+                InfrastructureView.EnableDivide();
                     
                 MonsterService.RaiseScore(MonsterView.ID, InfrastructureView.InfrastructureData.Points);
 
