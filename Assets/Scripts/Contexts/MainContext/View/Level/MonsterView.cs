@@ -24,6 +24,8 @@ namespace Contexts.MainContext
         private Controls _controls;
         private readonly List<Collider> _temp = new List<Collider>();
 
+        private Coroutine _attackCoroutine;
+
         public void SetData(MonsterData monsterData, Controls controls)
         {
             MonsterData = monsterData;
@@ -40,12 +42,17 @@ namespace Contexts.MainContext
             StartCoroutine(Growth(scale, blendKeyValue));
         }
         
-        public void RemoveFromTemp(Collider collider)
+        public void FinishAttack(Collider collider)
         {
             _temp.Remove(collider);
 
             if (_temp.Count == 0)
             {
+                if (_attackCoroutine != null)
+                {
+                    StopCoroutine(_attackCoroutine);
+                    _attackCoroutine = null;
+                }
                 if (animator.GetBool(attackAnimBool))
                     animator.SetBool(attackAnimBool, false);
             }
@@ -96,9 +103,11 @@ namespace Contexts.MainContext
         {
             if ((infrastructureLayer.value & (1 << collider.gameObject.layer)) > 0)
             {
+                if (_attackCoroutine is null)
+                    _attackCoroutine = StartCoroutine(Attack());
                 if (!animator.GetBool(attackAnimBool))
                     animator.SetBool(attackAnimBool, true);
-                
+
                 _temp.Add(collider);
             }
         }
@@ -106,7 +115,7 @@ namespace Contexts.MainContext
         private void OnTriggerExit(Collider collider)
         {
             if ((infrastructureLayer.value & (1 << collider.gameObject.layer)) > 0)
-                RemoveFromTemp(collider);
+                FinishAttack(collider);
         }
 
         private IEnumerator Growth(float scale, float blendKeyValue)
@@ -129,10 +138,15 @@ namespace Contexts.MainContext
             }
         }
         
-        private void OnAttack()
+        private IEnumerator Attack()
         {
-            for (int i = 0; i < _temp.Count; i++)
-                HitInfrastructureSignal.Dispatch(_temp[i]);
+            while (true)
+            {
+                for (int i = 0; i < _temp.Count; i++)
+                    HitInfrastructureSignal.Dispatch(_temp[i]);
+
+                yield return new WaitForSeconds(MonsterData.AttackSpeed);
+            }
         }
     }
 }

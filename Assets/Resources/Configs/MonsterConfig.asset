@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: MonsterConfig
   m_EditorClassIdentifier: 
   monsterData:
-    attackDamage: 50
-    attackRange: 5
+    attackDamage: 2
+    attackSpeed: 0.1
     movementSpeed: 10
     growthPointLimit: 1000
     maxScale: 6

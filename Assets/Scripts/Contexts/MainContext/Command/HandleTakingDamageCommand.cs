@@ -21,7 +21,7 @@ namespace Contexts.MainContext
             {
                 HealthService.Remove(InfrastructureView.ID);
                 
-                MonsterView.RemoveFromTemp(InfrastructureView.GetComponent<Collider>());
+                MonsterView.FinishAttack(InfrastructureView.GetComponent<Collider>());
                 InfrastructureView.SetDivideActive(true);
                     
                 MonsterService.RaiseScore(MonsterView.ID, InfrastructureView.InfrastructureData.Points);
