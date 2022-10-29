@@ -13,11 +13,10 @@ namespace Contexts.MainContext
 
         public override void OnRegister()
         {
-            Controls.Enable(); //удалить
-            /*StartGameSignal.AddListener(Controls.Enable);
+            StartGameSignal.AddListener(Controls.Enable);
             PauseGameSignal.AddListener(Controls.Disable);
             ContinueGameSignal.AddListener(Controls.Enable);
-            EndGameSignal.AddListener(Controls.Disable);*/
+            EndGameSignal.AddListener(Controls.Disable);
         
             Controls.User.TouchContact.started += (_) => View.SetActive(true);
             Controls.User.TouchContact.canceled += (_) => View.SetActive(false);

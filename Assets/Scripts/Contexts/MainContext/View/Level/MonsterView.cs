@@ -17,6 +17,7 @@ namespace Contexts.MainContext
         [Space, SerializeField] private LayerMask infrastructureLayer;
         [SerializeField] private SkinnedMeshRenderer meshRenderer;
         [Space, SerializeField] private TMP_Text scoreText;
+        [Space, SerializeField] private GameObject progressBar;
 
         public MonsterData MonsterData { get; private set; }
 
@@ -54,7 +55,24 @@ namespace Contexts.MainContext
         {
             StartCoroutine(Move());
         }
+
+        public void DestroyView()
+        {
+            Destroy(gameObject);
+        }
         
+        public void SetProgressBarActive()
+        {
+            progressBar.SetActive(true);
+        }
+
+        protected override void Start()
+        {
+            base.Start();
+
+            progressBar.SetActive(false);
+        }
+
         private IEnumerator Move()
         {
             while (true)

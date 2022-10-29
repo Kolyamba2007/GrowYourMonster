@@ -61,6 +61,26 @@ namespace Contexts.MainContext
             mediationBinder
                 .Bind<InfrastructureView>()
                 .To<InfrastructureMediator>();
+            
+            mediationBinder
+                .Bind<SnapScrollingView>()
+                .To<SnapScrollingMediator>();
+            
+            mediationBinder
+                .Bind<CameraView>()
+                .To<CameraMediator>();
+            
+            mediationBinder
+                .Bind<PlayButtonView>()
+                .To<PlayButtonMediator>();
+            
+            mediationBinder
+                .Bind<PauseButtonView>()
+                .To<PauseButtonMediator>();
+            
+            mediationBinder
+                .Bind<PausePanelView>()
+                .To<PausePanelMediator>();
         }
     
         private void BindSignals()
@@ -84,6 +104,22 @@ namespace Contexts.MainContext
             injectionBinder
                 .Bind<HandleTakingDamageSignal>()
                 .ToSingleton();
+            
+            injectionBinder
+                .Bind<ChangeTransformSignal>()
+                .ToSingleton();
+            
+            injectionBinder
+                .Bind<DestroySignal>()
+                .ToSingleton();
+            
+            injectionBinder
+                .Bind<StartCameraTransitionSignal>()
+                .ToSingleton();
+            
+            injectionBinder
+                .Bind<SetTimeScaleSignal>()
+                .ToSingleton();
         }
     
         private void BindCommands()
@@ -91,6 +127,14 @@ namespace Contexts.MainContext
             commandBinder
                 .Bind<HandleTakingDamageSignal>()
                 .To<HandleTakingDamageCommand>();
+            
+            commandBinder
+                .Bind<SetTimeScaleSignal>()
+                .To<SetTimeScaleCommand>();
+            
+            commandBinder
+                .Bind<ReloadSceneSignal>()
+                .To<ReloadSceneCommand>();
         }
 
         private void BindModels()
