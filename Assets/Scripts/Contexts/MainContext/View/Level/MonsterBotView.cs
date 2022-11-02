@@ -1,4 +1,5 @@
 using System.Collections;
+using strange.extensions.signal.impl;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -6,6 +7,8 @@ namespace Contexts.MainContext
 {
     public class MonsterBotView : MonsterView
     {
+        public Signal<NavMeshAgent> UpdateSpeedSignal { get; } = new Signal<NavMeshAgent>();
+        
         [SerializeField] private Rigidbody rb;
         [SerializeField] private NavMeshAgent navMeshAgent;
         [SerializeField] private Transform map;
@@ -28,7 +31,11 @@ namespace Contexts.MainContext
         public void SetData(MonsterData monsterData)
         {
             MonsterData = monsterData;
-            navMeshAgent.speed = MonsterData.MovementSpeed;
+        }
+
+        public void UpdateSpeed()
+        {
+            UpdateSpeedSignal.Dispatch(navMeshAgent);
         }
         
         public override void FinishAttack(Collider collider)
@@ -55,7 +62,7 @@ namespace Contexts.MainContext
                 navMeshAgent.destination =
                     new Vector3(Random.Range(_minX, _maxX), transform.position.y, Random.Range(_minZ, _maxZ));
 
-                yield return new WaitForSeconds(10);
+                yield return new WaitForSeconds(Random.Range(8, 11));
             }
         }
         
@@ -72,7 +79,10 @@ namespace Contexts.MainContext
             while (true)
             {
                 for (int i = 0; i < Temp.Count; i++)
+                {
                     HitInfrastructureSignal.Dispatch(Temp[i]);
+                    UpdateSpeed();
+                }
 
                 yield return new WaitForSeconds(MonsterData.AttackSpeed);
             }

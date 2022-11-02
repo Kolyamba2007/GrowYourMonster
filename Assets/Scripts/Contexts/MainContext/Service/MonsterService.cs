@@ -1,4 +1,5 @@
 using System.Linq;
+using UnityEngine;
 
 namespace Contexts.MainContext
 {
@@ -11,26 +12,34 @@ namespace Contexts.MainContext
             id = GetID();
             
             MonsterState.Score.Add(id, 0);
+            MonsterState.Speed.Add(id, 0);
         }
 
         public void Remove(ushort id)
         {
-            if (MonsterState.Score.TryGetValue(id, out int _))
+            if (MonsterState.Score.ContainsKey(id))
                 MonsterState.Score.Remove(id);
         }
 
         public void RaiseScore(ushort id, int point)
         {
-            if (MonsterState.Score.TryGetValue(id, out int _))
+            if (MonsterState.Score.ContainsKey(id))
                 MonsterState.Score[id] += point;
         }
 
         public int GetScore(ushort id)
         {
-            if (MonsterState.Score.TryGetValue(id, out int score))
-                return score;
-            else
-                return 0;
+            if (MonsterState.Score.ContainsKey(id))
+                return MonsterState.Score[id];
+            
+            Debug.LogError($"Monster does not exist with ID: {id}");
+            return 0;
+        }
+
+        public void ChangeSpeed(ushort id, float speed)
+        {
+            if (MonsterState.Score.ContainsKey(id))
+                MonsterState.Speed[id] = speed;
         }
 
         private ushort GetID()
@@ -39,8 +48,8 @@ namespace Contexts.MainContext
 
             if (id.Count != 0)
                 return (ushort) (id.Max() + 1);
-            else
-                return 0;
+            
+            return 0;
         }
     }
 }

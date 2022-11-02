@@ -15,6 +15,7 @@ MonoBehaviour:
   monsterData:
     attackDamage: 2
     attackSpeed: 0.1
-    movementSpeed: 10
-    growthPointLimit: 1000
+    startSpeed: 12
+    endSpeed: 16
+    growthPointLimit: 10
     maxScale: 6

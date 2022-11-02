@@ -148,7 +148,8 @@ MonoBehaviour:
   devidedPrefab: {fileID: 7469340846321502481, guid: 3889f3df3c2e77e4d8fffaf17b8da442,
     type: 3}
   animator: {fileID: 5800324681618520360}
-  healthBarRect: {fileID: 6317049513982810494}
+  healthBarRect: {fileID: 4962436500908089061}
+  healthBarImage: {fileID: 5239992783449527725}
   triggerName: Shake
 --- !u!95 &5800324681618520360
 Animator:
@@ -299,12 +300,24 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1e1ad6756e0af3743afa3a4b6888e7bc, type: 3}
---- !u!224 &6317049513982810494 stripped
+--- !u!224 &4962436500908089061 stripped
 RectTransform:
-  m_CorrespondingSourceObject: {fileID: 5068512371825764367, guid: 1e1ad6756e0af3743afa3a4b6888e7bc,
+  m_CorrespondingSourceObject: {fileID: 6134553058608689044, guid: 1e1ad6756e0af3743afa3a4b6888e7bc,
     type: 3}
   m_PrefabInstance: {fileID: 1296001183368294769}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &5239992783449527725 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6432375677382141148, guid: 1e1ad6756e0af3743afa3a4b6888e7bc,
+    type: 3}
+  m_PrefabInstance: {fileID: 1296001183368294769}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &6317049514544791316 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 5068512371280563813, guid: 1e1ad6756e0af3743afa3a4b6888e7bc,

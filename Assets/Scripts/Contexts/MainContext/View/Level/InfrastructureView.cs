@@ -8,25 +8,26 @@ namespace Contexts.MainContext
     {
         [HideInInspector, SerializeField] private string type;
         [SerializeField] private GameObject devidedPrefab;
-        [SerializeField] private Animator animator;
-        [SerializeField] private RectTransform healthBarRect;
-        [SerializeField] private string triggerName;
+        [Space, SerializeField] private Animator animator;
+        [Space, SerializeField] private RectTransform healthBarRect;
+        [SerializeField] private Image healthBarImage;
+        [Space, SerializeField] private string triggerName;
 
         public InfrastructureData InfrastructureData { get; private set; }
         public string Type => type;
 
-        private Slider _healthBarSlider;
         private Coroutine _handleHealthBar;
+
+        protected override void Awake()
+        {
+            base.Awake();
+
+            healthBarRect.gameObject.SetActive(false);
+        }
 
         public void SetData(InfrastructureData infrastructureData)
         {
             InfrastructureData = infrastructureData;
-
-            _healthBarSlider = healthBarRect.GetComponent<Slider>();
-            _healthBarSlider.maxValue = InfrastructureData.Health;
-            _healthBarSlider.value = InfrastructureData.Health;
-            
-            healthBarRect.gameObject.SetActive(false);
         }
         
         public void EnableDivide()
@@ -51,20 +52,21 @@ namespace Contexts.MainContext
             }
         }
 
-        public void UpdateHealthBar(int value)
+        public void UpdateHealthBar(float ratio)
         {
-            _healthBarSlider.value = value;
+            healthBarImage.fillAmount = ratio;
         }
 
         private IEnumerator HandleHealthBar()
         {
+            Camera mainCamera = Camera.main!;
             healthBarRect.gameObject.SetActive(true);
 
             float time = 0;
             while (time < 1)
             {
                 time += Time.deltaTime;
-                healthBarRect.position = Camera.main.WorldToScreenPoint(transform.position);
+                healthBarRect.position = mainCamera.WorldToScreenPoint(transform.position);
                 
                 yield return null;
             }

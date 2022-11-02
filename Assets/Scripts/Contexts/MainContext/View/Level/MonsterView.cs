@@ -14,6 +14,8 @@ namespace Contexts.MainContext
         [Space, SerializeField] protected Animator animator;
         [SerializeField] protected string walkAnimBool;
         [SerializeField] protected string attackAnimBool;
+        [SerializeField] protected string attackAnimName;
+        [SerializeField] protected string moveBlendParamName;
         [Space, SerializeField] private LayerMask infrastructureLayer;
         [SerializeField] private LayerMask monsterLayer;
         [SerializeField] private SkinnedMeshRenderer meshRenderer;
@@ -32,9 +34,9 @@ namespace Contexts.MainContext
             scoreText.text = score.ToString();
         }
         
-        public void GrowUp(float scale, float blendKeyValue)
+        public void GrowUp(float scale, float blendShapeValue, float blendAnimationValue)
         {
-            StartCoroutine(Growth(scale, blendKeyValue));
+            StartCoroutine(Growth(scale, blendShapeValue, blendAnimationValue));
         }
 
         public abstract void FinishAttack(Collider collider);
@@ -78,7 +80,7 @@ namespace Contexts.MainContext
             else if ((monsterLayer.value & (1 << collider.gameObject.layer)) > 0)
             {
                 HitEnemySignal.Dispatch(collider);
-                animator.Play("Attack");
+                animator.Play(attackAnimName);
             }
         }
 
@@ -88,21 +90,23 @@ namespace Contexts.MainContext
                 FinishAttack(collider);
         }
 
-        private IEnumerator Growth(float scale, float blendKeyValue)
+        private IEnumerator Growth(float scale, float blendShapeValue, float blendAnimationValue)
         {
             Vector3 startScale = transform.localScale;
             Vector3 endScale = new Vector3(scale, scale, scale);
             
-            float startKeyValue = meshRenderer.GetBlendShapeWeight(0);
+            float startShapeValue = meshRenderer.GetBlendShapeWeight(0);
+            float startMoveValue = animator.GetFloat(moveBlendParamName);
             
             float time = 0;
-
+            
             while (time < 1)
             {
                 time += Time.deltaTime;
 
                 transform.localScale = Vector3.Lerp(startScale, endScale, time);
-                meshRenderer.SetBlendShapeWeight(0, Mathf.Lerp(startKeyValue, blendKeyValue, time));
+                meshRenderer.SetBlendShapeWeight(0, Mathf.Lerp(startShapeValue, blendShapeValue, time));
+                animator.SetFloat(moveBlendParamName, Mathf.Lerp(startMoveValue, blendAnimationValue, time));
                 
                 yield return null;
             }

@@ -7,6 +7,7 @@ namespace Contexts.MainContext
     {
         [Inject] public T View { get; set; }
         [Inject] public IMonsterService MonsterService { get; set; }
+        [Inject] public IMonsterState MonsterState { get; set; }
         [Inject] public GameConfig GameConfig { get; set; }
         [Inject] public HandleTakingDamageSignal HandleTakingDamageSignal { get; set; }
         [Inject] public DestroySignal DestroySignal { get; set; }

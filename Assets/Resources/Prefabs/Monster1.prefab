@@ -1527,6 +1527,8 @@ MonoBehaviour:
   animator: {fileID: 2761596306787692394}
   walkAnimBool: isWalk
   attackAnimBool: isAttack
+  attackAnimName: Attack
+  moveBlendParamName: Move
   infrastructureLayer:
     serializedVersion: 2
     m_Bits: 128
