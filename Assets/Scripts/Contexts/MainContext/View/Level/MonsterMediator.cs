@@ -12,6 +12,7 @@ namespace Contexts.MainContext
         [Inject] public HandleTakingDamageSignal HandleTakingDamageSignal { get; set; }
         [Inject] public DestroySignal DestroySignal { get; set; }
         [Inject] public StartGameSignal StartGameSignal { get; set; }
+        [Inject] public SpawnedNewMonsterSignal SpawnedNewMonsterSignal { get; set; }
 
         private MonsterView _monsterView;
 
@@ -40,7 +41,7 @@ namespace Contexts.MainContext
 
         private void OnInfrastructureHit(Collider collider)
         {
-            if (collider.TryGetComponent(out InfrastructureView infrastructureView))
+            if (collider!.TryGetComponent(out InfrastructureView infrastructureView))
                 HandleTakingDamageSignal.Dispatch((View as MonsterView)!, infrastructureView);
         }
 

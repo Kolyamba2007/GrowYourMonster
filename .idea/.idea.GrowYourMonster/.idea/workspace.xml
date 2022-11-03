@@ -12,7 +12,6 @@
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Contexts/MainContext/Model/InfrastructureConfig.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Contexts/MainContext/Signal/ChangeTransformSignal.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Contexts/MainContext/Signal/HandleTakingDamageSignal.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Contexts/MainContext/View/UI/HealthBarView.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Contexts/MainContext/Model/IMonsterState.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Contexts/MainContext/Model/MonsterConfig.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Contexts/MainContext/View/Level/MonsterBotMediator.cs" root0="FORCE_HIGHLIGHTING" />
@@ -21,6 +20,7 @@
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Contexts/MainContext/Service/IHealthService.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Contexts/MainContext/Structs/InfrastructureData.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Contexts/MainContext/Signal/DestroySignal.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Common/ScreenToWorld.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Common/MonsterStruct.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Contexts/MainContext/View/Level/ControlledMonsterView.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
@@ -82,6 +82,7 @@
       <workItem from="1667026580588" duration="10081000" />
       <workItem from="1667043599476" duration="13999000" />
       <workItem from="1667405116487" duration="18574000" />
+      <workItem from="1667470739134" duration="17114000" />
     </task>
     <servers />
   </component>

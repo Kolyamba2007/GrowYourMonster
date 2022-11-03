@@ -17,5 +17,5 @@ MonoBehaviour:
     attackSpeed: 0.1
     startSpeed: 12
     endSpeed: 16
-    growthPointLimit: 10
+    growthPointLimit: 1000
     maxScale: 6

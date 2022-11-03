@@ -15,6 +15,8 @@ namespace Contexts.MainContext
             
             View.SetData(GameConfig.GetMonsterConfig.MonsterData, Controls);
             MonsterService.ChangeSpeed(View.ID, View.MonsterData.StartSpeed);
+            
+            SpawnedNewMonsterSignal.Dispatch(View.transform);
         }
         
         public override void OnRemove()
@@ -28,7 +30,6 @@ namespace Contexts.MainContext
         private void OnMove(Vector3 direction)
         {
             View.MoveTo(direction, MonsterState.Speed[View.ID]);
-            Debug.Log(MonsterState.Speed[View.ID]);
         }
     }
 }

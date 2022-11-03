@@ -68,7 +68,7 @@ namespace Contexts.MainContext
                 time += Time.deltaTime;
                 healthBarRect.position = mainCamera.WorldToScreenPoint(transform.position);
                 
-                yield return null;
+                yield return new WaitForEndOfFrame();
             }
             
             healthBarRect.gameObject.SetActive(false);

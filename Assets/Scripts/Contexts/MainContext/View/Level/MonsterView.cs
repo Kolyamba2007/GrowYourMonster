@@ -29,14 +29,17 @@ namespace Contexts.MainContext
 
         protected readonly List<Collider> Temp = new List<Collider>();
 
+        private Coroutine _growUp;
+
         public void UpdateScore(int score)
         {
             scoreText.text = score.ToString();
         }
-        
+
         public void GrowUp(float scale, float blendShapeValue, float blendAnimationValue)
         {
-            StartCoroutine(Growth(scale, blendShapeValue, blendAnimationValue));
+            if (_growUp != null) StopCoroutine(_growUp);
+            _growUp = StartCoroutine(Growth(scale, blendShapeValue, blendAnimationValue));
         }
 
         public abstract void FinishAttack(Collider collider);
@@ -49,6 +52,7 @@ namespace Contexts.MainContext
         public void DestroyView()
         {
             Destroy(gameObject);
+            Destroy(progressBar);
         }
         
         public void SetProgressBarActive()

@@ -124,6 +124,10 @@ namespace Contexts.MainContext
             injectionBinder
                 .Bind<SetTimeScaleSignal>()
                 .ToSingleton();
+            
+            injectionBinder
+                .Bind<SpawnedNewMonsterSignal>()
+                .ToSingleton();
         }
     
         private void BindCommands()
